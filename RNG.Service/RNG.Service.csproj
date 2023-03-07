@@ -28,9 +28,22 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Fast.Components.FluentUI" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Fast.Components.FluentUI.DataGrid.EntityFrameworkAdapter" Version="2.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Syncfusion.Blazor" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Data" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Lists" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Sparkline" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.4.0.52" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.4.0.52" />
   </ItemGroup>
 
 </Project>
