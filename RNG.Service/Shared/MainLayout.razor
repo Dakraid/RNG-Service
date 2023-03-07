@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>RNG Service</PageTitle>
+
+<div class="container">
+  <div class="siteheader">
+    <a href="/">
+      <img src="img/logo.png" alt="Logo"/>
+    </a>
+  </div>
+  <div class="main">
+    <nav class="navigation">
+      <NavMenu/>
+    </nav>
+
+    <main class="content">
+      <ErrorBoundary>
+        <ChildContent>
+          @Body
+        </ChildContent>
+        <ErrorContent Context="ex">
+          <p class="error">@ex.Message</p>
+        </ErrorContent>
+      </ErrorBoundary>
+    </main>
+  </div>
+</div>

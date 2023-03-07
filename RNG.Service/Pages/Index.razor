@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<PageTitle>Dashboard</PageTitle>
+
+<div class="inner-layout">
+  <FluentCard>
+    <div class="headings">
+      <p style="grid-column: 1;">These buttons allow to test the API endpoints.</p>
+      <p style="grid-column: 2;">This column shows the results of the calls.</p>
+    </div>
+    <div class="contents">
+      <FluentButton Appearance="Appearance.Accent" Style="grid-column: 1; min-width: 160px;">Get random float</FluentButton>
+            <FluentTextField @bind-Value=value1 Style="grid-column: 2; min-width: 160px;"></FluentTextField>
+      <FluentButton Appearance="Appearance.Accent" Style="grid-column: 1; min-width: 160px;">Get latest statistics</FluentButton>
+            <FluentTextField @bind-Value=value2 Style="grid-column: 2; min-width: 160px;"></FluentTextField>
+      <FluentButton Appearance="Appearance.Accent" Style="grid-column: 1; min-width: 160px;">Run new batched test</FluentButton>
+            <FluentTextField @bind-Value=value3 Style="grid-column: 2; min-width: 160px;"></FluentTextField>
+    </div>
+  </FluentCard>
+</div>
+
+@code
+{
+    string? value1, value2, value3;
+}

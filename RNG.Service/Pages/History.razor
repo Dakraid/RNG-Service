@@ -1,0 +1,70 @@
+﻿@page "/history"
+@using RNG.Service.Services
+@using RNG.Service.Models
+
+@inject ResultsService ResultsService;
+
+<PageTitle>RNG History</PageTitle>
+
+<h1>RNG History</h1>
+
+<p>Shows the history of all RNG rolls provided.</p>
+<p>Note: The API provides an uniform double between 0..1</p>
+
+<FluentCheckbox @bind-Value="QueryAll" @onclick="QueryAllChanged">Get all?</FluentCheckbox>
+
+@if (_rngResults == null)
+{
+  <p>
+    <em>Loading...</em>
+  </p>
+}
+else if (!_rngResults.Any())
+{
+  <p>
+    <em>No entries in database found.</em>
+  </p>
+}
+else
+{
+  <FluentDataGrid RowsData="@_rngResults" Virtualize="true" @ref="_grid" GridTemplateColumns="1fr 1fr 1fr" class="table-view" style="height: 75vh; overflow: auto;">
+    <PropertyColumn Title="Timestamp" Property="@(c => c.Timestamp)" Sortable="true" Align="Align.Left"/>
+    <PropertyColumn Title="Result" Property="@(c => c.Result)" Sortable="true" Align="Align.Left"/>
+    <PropertyColumn Title="Requestor" Property="@(c => c.Requestor)" Sortable="true" Align="Align.Left"/>
+  </FluentDataGrid>
+}
+
+@code {
+  private bool QueryAll { get; set; }
+
+  private FluentDataGrid<RngEntry>? _grid;
+
+  private IQueryable<RngEntry>? _rngResults;
+
+  private IQueryable<RngEntry>? _rngResultsAll;
+  private IQueryable<RngEntry>? _rngResultsFiltered;
+
+  protected override async Task OnInitializedAsync()
+  {
+    _rngResultsAll = await ResultsService.GetAllRngAsync();
+    _rngResultsFiltered = await ResultsService.GetAllFilteredRngAsync("Automated Test");
+
+    _rngResults = _rngResultsFiltered;
+
+    if (_grid == null)
+      return;
+
+    // _grid.RowsDataSize = 20;
+  }
+
+  private async void QueryAllChanged()
+  {
+    _rngResults = QueryAll ? _rngResultsFiltered : _rngResultsAll;
+
+    if (_grid == null)
+      return;
+
+    await _grid.RefreshDataAsync();
+  }
+
+}
