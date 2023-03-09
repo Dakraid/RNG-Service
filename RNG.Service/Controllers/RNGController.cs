@@ -16,11 +16,11 @@ namespace RNG.Service.Controllers
     using Models;
 
     using System.Security.Cryptography;
-#endregion
-#endregion
+    #endregion
+    #endregion
 
     [ApiController]
-    [Route("RNG")]
+    [Route("api/[controller]")]
     public class RngController : ControllerBase
     {
         private readonly DatabaseContext _context;

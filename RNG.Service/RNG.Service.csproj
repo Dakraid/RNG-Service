@@ -12,8 +12,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\History.razor.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\History.razor.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazor-ApexCharts" Version="0.9.18-beta" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.3" />
@@ -30,20 +39,6 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Syncfusion.Blazor" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Cards" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Core" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Data" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Lists" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Sparkline" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.4.0.52" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.4.0.52" />
   </ItemGroup>
 
 </Project>

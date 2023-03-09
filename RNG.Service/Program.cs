@@ -7,14 +7,18 @@
 
 namespace RNG.Service
 {
-#region usings
+    #region usings
     using Database;
 
+    using Microsoft.AspNetCore.OData;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Fast.Components.FluentUI;
+    using Microsoft.OData.Edm;
+    using Microsoft.OData.ModelBuilder;
 
-    using Services;
-#endregion
+    using Models;
+    using Syncfusion.Blazor;
+
+    #endregion
 
     public class Program
     {
@@ -36,35 +40,38 @@ namespace RNG.Service
             }
         }
 
+        private static IEdmModel GetEdmModel()
+        {
+            ODataConventionModelBuilder builder = new();
+            builder.EntitySet<RngEntry>("RNG_List");
+            builder.EntitySet<BatchedTest>("RNG_Tests");
+            return builder.GetEdmModel();
+        }
+
         private static void Main(string[] args)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt/QHRqVVhjVFpFdEBBXHxAd1p/VWJYdVt5flBPcDwsT3RfQF5jSn5UdkBmWnpecX1VTg==;Mgo+DSMBPh8sVXJ0S0J+XE9HflRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS31TdUVkWXpbc3FVRGBfWQ==;Mgo+DSMBMAY9C3t2VVhkQlFadVdJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkZjXn9bdXdQRmJdVkw=;MTI3MDkyNkAzMjMwMmUzNDJlMzBMdnNVdDhnTStFTERORk5zYVJkT2xVSHNIaWlXNVM3R084TDdkcVowdEw4PQ==");
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add active controllers to the services
-            builder.Services.AddControllers();
+            builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
             // Enable Application Insights Telemetry
             // builder.Services.AddApplicationInsightsTelemetry();
 
             // Enable Blazor server side web UI
-            builder.Services.AddRazorPages();
-            builder.Services.AddServerSideBlazor(o => o.DetailedErrors = true);
-
-            // Setup Microsoft.Fast FluentUI component library
             builder.Services.AddHttpClient();
-            builder.Services.AddFluentUIComponents();
-            builder.Services.AddDataGridEntityFrameworkAdapter();
-
-            // Add services to the container.
-            builder.Services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            builder.Services.AddScoped<ResultsService>();
-
+            builder.Services.AddRazorPages();
+            builder.Services.AddServerSideBlazor();
+            builder.Services.AddSyncfusionBlazor();
+            
             // Set CORS Policy
             builder.Services.AddCors(options =>
             {
@@ -89,20 +96,23 @@ namespace RNG.Service
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             // Setup used app features
             app.UseHttpsRedirection();
             // app.UseCors();
+
             app.UseStaticFiles();
+
             app.UseRouting();
 
-            // Map required elements
-            app.MapControllers();
-            app.MapBlazorHub();
-            app.MapFallbackToPage("/_Host");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
+            });
 
             // Start the web app
             app.Run();

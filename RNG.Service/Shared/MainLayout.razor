@@ -1,27 +1,99 @@
 ﻿@inherits LayoutComponentBase
 
+@inject NavigationManager NavigationManager
+
 <PageTitle>RNG Service</PageTitle>
 
-<div class="container">
-  <div class="siteheader">
-    <a href="/">
-      <img src="img/logo.png" alt="Logo"/>
-    </a>
-  </div>
-  <div class="main">
-    <nav class="navigation">
-      <NavMenu/>
-    </nav>
+<div class="site-header">
+  <a href="/">
+    <img src="img/logo.png" alt="Logo"/>
+  </a>
+  <SfMenu TValue="MenuItem" CssClass="e-rounded-menu">
+    <MenuItems>
+      <MenuItem Text="Appliances">
+        <MenuItems>
+          <MenuItem Text="Washing Machine" Url="https://www.google.com/search?q=washing+machine"></MenuItem>
+          <MenuItem Text="Air Conditioners" Url="https://www.google.com/search?q=air+conditioners"></MenuItem>
+        </MenuItems>
+      </MenuItem>
+      <MenuItem Text="Mobile">
+        <MenuItems>
+          <MenuItem Text="Headphones" Url="https://www.google.com/search?q=headphones"></MenuItem>
+          <MenuItem Text="Memory Cards" Url="https://www.google.com/search?q=memory+cards"></MenuItem>
+          <MenuItem Text="Power Banks" Url="https://www.google.com/search?q=power+banks"></MenuItem>
+        </MenuItems>
+      </MenuItem>
+      <MenuItem Text="Entertainment">
+        <MenuItems>
+          <MenuItem Text="Televisions" Url="https://www.google.com/search?q=televisions"></MenuItem>
+          <MenuItem Text="Home Theatres" Url="https://www.google.com/search?q=home+theatres"></MenuItem>
+          <MenuItem Text="Gaming Laptops" Url="https://www.google.com/search?q=gaming+laptops"></MenuItem>
+        </MenuItems>
+      </MenuItem>
+      <MenuItem Text="Fashion" Url="https://www.google.com/search?q=fashion"></MenuItem>
+      <MenuItem Text="Offers" Url="https://www.google.com/search?q=offers"></MenuItem>
 
-    <main class="content">
-      <ErrorBoundary>
-        <ChildContent>
-          @Body
-        </ChildContent>
-        <ErrorContent Context="ex">
-          <p class="error">@ex.Message</p>
-        </ErrorContent>
-      </ErrorBoundary>
-    </main>
+    </MenuItems>
+  </SfMenu>
+</div>
+
+
+<div class="container">
+  <div class="sidebar">
+    <div class="control-section">
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+          <SfCard>
+            <CardHeader Title="Navigation"/>
+            <CardContent>
+              <SfButton @ref="home" @onclick="@(e => StartNavigation("/"))" CssClass="@SetAppearance("")">Main</SfButton>
+              <SfButton @ref="actions" @onclick="@(e => StartNavigation("/Swagger"))" CssClass="@SetAppearance("Actions")">Actions</SfButton>
+              <SfButton @ref="history" @onclick="@(e => StartNavigation("/History"))" CssClass="@SetAppearance("History")">History</SfButton>
+              <SfButton @ref="tests" @onclick="@(e => StartNavigation("/Tests"))" CssClass="@SetAppearance("Tests")">Tests</SfButton>
+            </CardContent>
+          </SfCard>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <ErrorBoundary>
+      <ChildContent>
+        @Body
+      </ChildContent>
+      <ErrorContent Context="ex">
+        <p class="error">@ex.Message</p>
+      </ErrorContent>
+    </ErrorBoundary>
   </div>
 </div>
+
+@code {
+  private string? _target;
+  private SfButton home, actions, history, tests;
+
+  private void StartNavigation(string target)
+  {
+    NavigationManager.NavigateTo(target);
+  }
+
+  protected override void OnInitialized()
+  {
+    NavigationManager.LocationChanged += LocationChanged;
+    base.OnInitialized();
+  }
+
+  private void LocationChanged(object? sender, LocationChangedEventArgs e)
+  {
+    var uri = new Uri(e.Location);
+    _target = uri.Segments.Count() > 1 ? uri.Segments[1] : "";
+    StateHasChanged();
+  }
+
+  private string SetAppearance(string location)
+  {
+    return string.Equals(location, _target, StringComparison.OrdinalIgnoreCase) ? "loc-active" : "";
+  }
+
+}

@@ -15,6 +15,6 @@ namespace RNG.Service.Models
         public double Result { get; set; }
         public string Requestor { get; set; } = string.Empty;
         // ReSharper disable once InconsistentNaming
-        public int BatchedTestID { get; set; }
+        public int? BatchedTestID { get; set; }
     }
 }
