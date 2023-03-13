@@ -5,17 +5,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="~/" />
   <title>RNG Service Overview</title>
+
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <base href="~/"/>
+
+  <link href="_content/Microsoft.Fast.Components.FluentUI/css/reboot.css" rel="stylesheet" />
   <link href="_content/Syncfusion.Blazor/styles/bootstrap5.css" rel="stylesheet" />
   <link href="css/site.css" rel="stylesheet"/>
   <link href="RNG.service.styles.css" rel="stylesheet" />
-  <script src="/js/functions.js"></script>
+
   <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered"/>
 </head>
 <body>
+
 @RenderBody()
 
 <div id="blazor-error-ui">
@@ -29,7 +33,15 @@
   <a class="dismiss">🗙</a>
 </div>
 
-<script src="_content/Syncfusion.Blazor/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>
-<script src="_framework/blazor.server.js"></script>
+<script>
+  window.GetLocation = () => {
+    console.log(window.location.pathname);
+    return window.location.pathname;
+  };
+</script>
+
+    <script src="_framework/blazor.server.js" type="text/javascript"></script>
+    <script src="_content/Syncfusion.Blazor/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@@fluentui/web-components/dist/web-components.min.js"></script>
 </body>
 </html>

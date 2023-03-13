@@ -40,21 +40,7 @@
 
 <div class="container">
   <div class="sidebar">
-    <div class="control-section">
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-          <SfCard>
-            <CardHeader Title="Navigation"/>
-            <CardContent>
-              <SfButton @ref="home" @onclick="@(e => StartNavigation("/"))" CssClass="@SetAppearance("")">Main</SfButton>
-              <SfButton @ref="actions" @onclick="@(e => StartNavigation("/Swagger"))" CssClass="@SetAppearance("Actions")">Actions</SfButton>
-              <SfButton @ref="history" @onclick="@(e => StartNavigation("/History"))" CssClass="@SetAppearance("History")">History</SfButton>
-              <SfButton @ref="tests" @onclick="@(e => StartNavigation("/Tests"))" CssClass="@SetAppearance("Tests")">Tests</SfButton>
-            </CardContent>
-          </SfCard>
-        </div>
-      </div>
-    </div>
+    <NavBar />
   </div>
 
   <div class="content">
@@ -70,30 +56,23 @@
 </div>
 
 @code {
-  private string? _target;
-  private SfButton home, actions, history, tests;
+    private string? _target;
 
-  private void StartNavigation(string target)
-  {
-    NavigationManager.NavigateTo(target);
-  }
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += LocationChanged;
+        base.OnInitialized();
+    }
 
-  protected override void OnInitialized()
-  {
-    NavigationManager.LocationChanged += LocationChanged;
-    base.OnInitialized();
-  }
+    private void LocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        var uri = new Uri(e.Location);
+        _target = uri.Segments.Count() > 1 ? uri.Segments[1] : "";
+        StateHasChanged();
+    }
 
-  private void LocationChanged(object? sender, LocationChangedEventArgs e)
-  {
-    var uri = new Uri(e.Location);
-    _target = uri.Segments.Count() > 1 ? uri.Segments[1] : "";
-    StateHasChanged();
-  }
-
-  private string SetAppearance(string location)
-  {
-    return string.Equals(location, _target, StringComparison.OrdinalIgnoreCase) ? "loc-active" : "";
-  }
-
+    private Appearance SetAppearance(string location)
+    {
+        return string.Equals(location, _target, StringComparison.OrdinalIgnoreCase) ? Appearance.Accent : Appearance.Stealth;
+    }
 }

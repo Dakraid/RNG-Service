@@ -12,6 +12,7 @@ namespace RNG.Service
 
     using Microsoft.AspNetCore.OData;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Fast.Components.FluentUI;
     using Microsoft.OData.Edm;
     using Microsoft.OData.ModelBuilder;
 
@@ -70,6 +71,7 @@ namespace RNG.Service
             builder.Services.AddHttpClient();
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
+            builder.Services.AddFluentUIComponents();
             builder.Services.AddSyncfusionBlazor();
             
             // Set CORS Policy

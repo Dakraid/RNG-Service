@@ -1,0 +1,41 @@
+﻿@inject NavigationManager NavigationManager
+
+<div class="control-section">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+      <SfCard>
+        <CardHeader Title="Navigation"/>
+        <CardContent>
+          <FluentAnchor Href="" Appearance=@SetAppearance("")>Overview</FluentAnchor>
+          <FluentAnchor Href="Actions" Appearance=@SetAppearance("Actions")>Actions</FluentAnchor>
+          <FluentAnchor Href="History" Appearance=@SetAppearance("History")>History</FluentAnchor>
+          <FluentAnchor Href="Tests" Appearance=@SetAppearance("Tests")>Tests</FluentAnchor>
+        </CardContent>
+      </SfCard>
+    </div>
+  </div>
+</div>
+
+@code {
+  private string? _target;
+
+  protected override void OnInitialized()
+  {
+    NavigationManager.LocationChanged += LocationChanged;
+    base.OnInitialized();
+  }
+
+  private void LocationChanged(object? sender, LocationChangedEventArgs e)
+  {
+    var uri = new Uri(e.Location);
+    _target = uri.Segments.Count() > 1 ? uri.Segments[1] : "";
+    StateHasChanged();
+  }
+
+  private Appearance SetAppearance(string location)
+  {
+    return string.Equals(location, _target, StringComparison.OrdinalIgnoreCase) ? Appearance.Accent : Appearance.Stealth;
+  }
+
+
+}

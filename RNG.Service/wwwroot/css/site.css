@@ -77,10 +77,6 @@ body {
       border-bottom: 1px solid #d6d5d5;
     }
 
-.loc-active {
-  background-color: #aab1b6;
-}
-
 #blazor-error-ui {
   background: lightyellow;
   bottom: 0;
