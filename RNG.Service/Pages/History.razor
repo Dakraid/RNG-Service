@@ -1,14 +1,24 @@
 ﻿@page "/History"
+@using RNG.Service.Models
 
 <PageTitle>Dashboard</PageTitle>
 
-  <div class="control-section">
-    <div class="row">
-      <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-        <SfCard>
-          <CardHeader Title="Debunking Five Data Science Myths" SubTitle="By John Doe | Jan 20, 2018"/>
-          <CardContent Content="Tech evangelists are currently pounding their pulpits about all things AI, machine learning, analytics—anything that sounds like the future and probably involves lots of numbers. Many of these topics can be grouped under the intimidating term data science."/>
-        </SfCard>
-      </div>
+<div class="control-section">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+      <SfCard>
+        <CardHeader Title="Debunking Five Data Science Myths" SubTitle="By John Doe | Jan 20, 2018"/>
+        <CardContent>
+          <SfGrid TValue="RngEntry" AllowFiltering="true" AllowSorting="true" AllowPaging="true">
+            <SfDataManager Url="api/DataController" Adaptor="Adaptors.WebApiAdaptor"></SfDataManager>
+            <GridColumns>
+              <GridColumn Field="Timestamp" HeaderText="Timestamp" IsPrimaryKey="true" TextAlign="TextAlign.Left" Width="120"></GridColumn>
+              <GridColumn Field="Result" HeaderText="Result" TextAlign="TextAlign.Left" Width="120"></GridColumn>
+              <GridColumn Field="Requestor" HeaderText="Requestor" TextAlign="TextAlign.Left" Width="120"></GridColumn>
+            </GridColumns>
+          </SfGrid>
+        </CardContent>
+      </SfCard>
     </div>
   </div>
+</div>
